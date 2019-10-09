@@ -13,6 +13,6 @@ const md = new MarkdownIt({
     return ''; // use external default escaping
   },
 });
-
+md.use(require('markdown-it-emoji'));
 
 export default md;
