@@ -1,6 +1,5 @@
 <template>
     <div>
-        <a-tree></a-tree>
     </div>
 </template>
 

@@ -1,7 +1,7 @@
 import Vue from 'vue';
-import './assets/global.scss';
+import '../src/assets/global.scss';
 import { Tree } from 'ant-design-vue';
-import App from './App.vue';
+import App from '../example/App.vue';
 
 
 Vue.config.productionTip = false;
