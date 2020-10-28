@@ -1,7 +1,5 @@
 <template>
-  <div id="app">
-
-  </div>
+  <div id="app"></div>
 </template>
 
 <script>
@@ -11,9 +9,6 @@ export default {
   components: {
   },
   created() {
-    this.$axios.get(this.$api.tree({ owner: 'ge-ge', repo: 'button', sha: 'master' }), { params: { recursive: 1, access_token: '9d053d3169a7592863033712835d78a0' } }).then((res) => {
-      console.log(res);
-    });
   },
 };
 </script>
