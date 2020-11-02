@@ -21,4 +21,10 @@ module.exports = {
       features: ['coreCommands', 'find'],
     }]);
   },
+  pages: {
+    index: {
+      // page 的入口
+      entry: 'example/main.js',
+    },
+  },
 };

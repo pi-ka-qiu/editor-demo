@@ -1,12 +1,16 @@
 <template>
-  <div id="app"></div>
+  <div id="app">
+    <editor-tree></editor-tree>
+  </div>
 </template>
 
 <script>
+import editorTree from '../src/editor-tree.vue';
 
 export default {
   name: 'app',
   components: {
+    editorTree,
   },
   created() {
   },

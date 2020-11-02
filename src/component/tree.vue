@@ -1,16 +1,6 @@
-<template>
-  <a-directory-tree multiple default-expand-all @select="onSelect" @expand="onExpand">
-    <a-tree-node
-      v-for="(item,index) of data"
-      :key="index"
-      :title="item.label"
-    >
-
-    </a-tree-node>
-  </a-directory-tree>
-</template>
-
 <script>
+import { Tree } from 'ant-design-vue';
+
 export default {
   name: 'tree',
   props: {
@@ -60,6 +50,22 @@ export default {
     onExpand() {
       console.log('Trigger Expand');
     },
+  },
+  render(createElement) {
+    const r = function (data) {
+      if (data.children) {
+        const childEle = r(data.children);
+        return createElement(Tree.TreeNode, data, childEle);
+      }
+      console.log(data);
+      return createElement(Tree.TreeNode, data);
+    };
+    console.log(this.data);
+    const childEle = r(this.data);
+    console.log('childEle', childEle);
+    const t = createElement(Tree.DirectoryTree, this.data, childEle);
+    console.log('all', t);
+    return t;
   },
 };
 </script>
