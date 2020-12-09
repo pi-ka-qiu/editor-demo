@@ -6,41 +6,49 @@ export default {
   props: {
     data: {
       type: Array,
-      default: () => [{
-        label: '一级 1',
-        children: [{
-          label: '二级 1-1',
-          children: [{
-            label: '三级 1-1-1',
-          }],
-        }],
-      }, {
-        label: '一级 2',
-        children: [{
-          label: '二级 2-1',
-          children: [{
-            label: '三级 2-1-1',
-          }],
-        }, {
-          label: '二级 2-2',
-          children: [{
-            label: '三级 2-2-1',
-          }],
-        }],
-      }, {
-        label: '一级 3',
-        children: [{
-          label: '二级 3-1',
-          children: [{
-            label: '三级 3-1-1',
-          }],
-        }, {
-          label: '二级 3-2',
-          children: [{
-            label: '三级 3-2-1',
-          }],
-        }],
-      }],
+      default: () => [
+        {
+          title: '0-0',
+          key: '0-0',
+          children: [
+            {
+              title: '0-0-0',
+              key: '0-0-0',
+              children: [
+                { title: '0-0-0-0', key: '0-0-0-0' },
+                { title: '0-0-0-1', key: '0-0-0-1' },
+                { title: '0-0-0-2', key: '0-0-0-2' },
+              ],
+            },
+            {
+              title: '0-0-1',
+              key: '0-0-1',
+              children: [
+                { title: '0-0-1-0', key: '0-0-1-0' },
+                { title: '0-0-1-1', key: '0-0-1-1' },
+                { title: '0-0-1-2', key: '0-0-1-2' },
+              ],
+            },
+            {
+              title: '0-0-2',
+              key: '0-0-2',
+            },
+          ],
+        },
+        {
+          title: '0-1',
+          key: '0-1',
+          children: [
+            { title: '0-1-0-0', key: '0-1-0-0' },
+            { title: '0-1-0-1', key: '0-1-0-1' },
+            { title: '0-1-0-2', key: '0-1-0-2' },
+          ],
+        },
+        {
+          title: '0-2',
+          key: '0-2',
+        },
+      ],
     },
   },
   methods: {
@@ -53,18 +61,23 @@ export default {
   },
   render(createElement) {
     const r = function (data) {
-      if (data.children) {
-        const childEle = r(data.children);
-        return createElement(Tree.TreeNode, data, childEle);
-      }
-      console.log(data);
-      return createElement(Tree.TreeNode, data);
+      const childEleVN = [];
+      data.forEach((item) => {
+        if (item.children) {
+          const childEleVN2 = r(item.children);
+          childEleVN.push(createElement(Tree.TreeNode, {
+            props: item,
+          }, childEleVN2));
+        } else {
+          childEleVN.push(createElement(Tree.TreeNode, {
+            props: item,
+          }));
+        }
+      });
+      return childEleVN;
     };
-    console.log(this.data);
     const childEle = r(this.data);
-    console.log('childEle', childEle);
-    const t = createElement(Tree.DirectoryTree, this.data, childEle);
-    console.log('all', t);
+    const t = createElement(Tree.DirectoryTree, {}, childEle);
     return t;
   },
 };
