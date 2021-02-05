@@ -52,15 +52,9 @@ export default {
     },
   },
   methods: {
-    onSelect(keys, event) {
-      console.log('Trigger Select', keys, event);
-    },
-    onExpand() {
-      console.log('Trigger Expand');
-    },
   },
   render(createElement) {
-    const r = function (data) {
+    const r = (data) => {
       const childEleVN = [];
       data.forEach((item) => {
         if (item.children) {
@@ -77,8 +71,9 @@ export default {
       return childEleVN;
     };
     const childEle = r(this.data);
-    const t = createElement(Tree.DirectoryTree, {}, childEle);
-    return t;
+    return createElement(Tree.DirectoryTree, {
+      attrs: this.$attrs,
+    }, childEle);
   },
 };
 </script>
