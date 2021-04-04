@@ -27,4 +27,15 @@ module.exports = {
       entry: 'example/main.js',
     },
   },
+  css: {
+    loaderOptions: {
+      less: {
+        // javascriptEnabled: true // old solution
+        // HERE is the difference!
+        lessOptions: {
+          javascriptEnabled: true,
+        },
+      },
+    },
+  },
 };

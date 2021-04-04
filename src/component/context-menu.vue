@@ -1,5 +1,8 @@
 <template>
-   <div class="context-menu">
+   <div class="context-menu" :style="{
+     left: position.left,
+     top: position.top
+   }">
      <div @click="create">新建</div>
    </div>
 </template>
@@ -8,15 +11,25 @@
 function create(event) {
   console.log(event);
 }
-function t() {
-  document.oncontextmenu = function (ev) {
-    console.log(ev);
-  };
-}
+
 export default {
   name: 'context-menu',
+  props: {
+    position: {
+      type: Object,
+      default() {
+        return {
+          left: '0px',
+          top: '0px',
+        };
+      },
+    },
+  },
+  data() {
+    return {
+    };
+  },
   mounted() {
-    t();
   },
   methods: {
     create,
@@ -25,5 +38,10 @@ export default {
 </script>
 
 <style scoped>
-
+.context-menu{
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 999;
+}
 </style>

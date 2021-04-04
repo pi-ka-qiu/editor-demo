@@ -53,27 +53,26 @@ export default {
   },
   methods: {
   },
-  render(createElement) {
+  render(h) {
     const r = (data) => {
       const childEleVN = [];
       data.forEach((item) => {
         if (item.children) {
           const childEleVN2 = r(item.children);
-          childEleVN.push(createElement(Tree.TreeNode, {
-            props: item,
-          }, childEleVN2));
+          childEleVN.push(<Tree.TreeNode {... { attrs: item }} >
+            {childEleVN2}
+          </Tree.TreeNode>);
         } else {
-          childEleVN.push(createElement(Tree.TreeNode, {
-            props: item,
-          }));
+          childEleVN.push(<Tree.TreeNode {...{ attrs: item }} ></Tree.TreeNode>);
         }
       });
       return childEleVN;
     };
     const childEle = r(this.data);
-    return createElement(Tree.DirectoryTree, {
-      attrs: this.$attrs,
-    }, childEle);
+    return <Tree.DirectoryTree {...{ attrs: this.$attrs }}
+    >{
+      childEle
+    }</Tree.DirectoryTree>;
   },
 };
 </script>
