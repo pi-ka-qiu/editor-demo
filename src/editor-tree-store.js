@@ -1,4 +1,4 @@
-import { FileSystem } from 'file-api';
+import { FileSystem } from 'browser-file-api';
 
 let fs = null;
 // fs 用于持久化数据，最新变量从state里面获取
@@ -9,7 +9,7 @@ export default {
     editorContent: {},
   },
   initFs(namespace) {
-    this.state.namespace = namespace;
+    this.state.namespace = namespace || '';
     fs = new FileSystem({ treePrefix: `trees-${namespace}`, pathPrefix: `path-${namespace}` });
   },
   // 初始化文件列表、会清除之前的缓存
