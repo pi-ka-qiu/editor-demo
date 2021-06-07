@@ -2,36 +2,15 @@
  * 基础编辑器，提供自适应高度，定位为Textarea 的代替品
  */
 // @ts-ignore
-import EditorCord from './editor-core.ts';
+import EditorCord from '../editor-core';
+import browserRender from './render/browser-render';
 
-function render(params = { placeholder: '' }) {
-  const PREFIX = 'c-editor';
-  const container = document.createElement('div');
-  container.className += `${PREFIX}-wrapper`;
-  const contentEditable = document.createElement('div');
-  contentEditable.className += `${PREFIX}-editable`;
-  contentEditable.setAttribute('contenteditable', 'true');
-
-  if (params.placeholder) {
-    const placeholderEle = document.createElement('div');
-    placeholderEle.className += `${PREFIX}-placeholder`;
-    placeholderEle.innerText = params.placeholder;
-    container.appendChild(placeholderEle);
-  }
-
-  container.appendChild(contentEditable);
-
-  return {
-    container,
-    contentEditable,
-  };
-}
 export default class BrowserEditor implements EditorCord {
   container: Element;
 
   contentEditable: Element;
 
-  constructor(el: Element, params = { placeholder: '' }) {
+  constructor(el: Element, params = { placeholder: '', content: '' }) {
     // 初始化element 节点
     const { container, contentEditable } = this.render(params);
     el.appendChild(container);
@@ -56,8 +35,9 @@ export default class BrowserEditor implements EditorCord {
     return this.contentEditable.textContent;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   render(params:any) {
-    return render(params);
+    return browserRender(params);
   }
 
   use(plugin: any) {

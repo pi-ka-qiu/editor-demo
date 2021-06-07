@@ -1,11 +1,10 @@
 <template>
-    <div class="editor">
-    </div>
+    <div class="editor"></div>
 </template>
 
 <script>
-import Editor from '../lib/browser-editor.ts';
-import '../lib/browser-editor.scss';
+import Editor from '../lib/browser-editor/browser-editor';
+import '../lib/browser-editor/browser-editor.scss';
 
 export default {
   name: 'editor',
