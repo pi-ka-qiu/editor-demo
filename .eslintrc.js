@@ -14,6 +14,7 @@ module.exports = {
   },
   parserOptions: {
     parser: 'babel-eslint',
+    "ecmaVersion": 6,
   },
   globals: {
     _sdi: 'writable',

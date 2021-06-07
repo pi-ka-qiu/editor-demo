@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { FileSystem } from 'browser-file-api';
 
 let fs = null;
@@ -47,5 +48,20 @@ export default {
   },
   async readdir(path) {
     return fs.readdir(path);
+  },
+  // 读取文件夹下文件，并判断是否文件夹
+  async readdirWithType(path, cb) {
+    const files = await fs.readdir(path);
+    return files.map(async (fileName) => {
+      const endS = path.endsWith('/');
+      const endPath = endS ? path : `${path}/`;
+      const filePath = endPath + fileName;
+      const stat = await fs.statSync(filePath);
+      const isDir = stat.isDirectory();
+      const isFile = stat.isFile();
+      return cb({
+        filePath, fileName, isDir, isFile,
+      });
+    });
   },
 };

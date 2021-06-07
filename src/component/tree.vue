@@ -1,17 +1,13 @@
 <script>
 import { Tree } from 'ant-design-vue';
+import 'ant-design-vue/lib/tree/style/index.css';
 
 export default {
   name: 'tree',
   props: {
     data: {
       type: Array,
-      default: () => [
-        {
-          title: '0-0',
-          key: '0-0',
-        },
-      ],
+      default: () => [],
     },
   },
   methods: {
