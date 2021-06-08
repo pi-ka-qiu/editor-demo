@@ -27,6 +27,7 @@ export default function render(params = { placeholder: '', content: '' }) {
   const contentEditable = document.createElement('div');
   contentEditable.className += `${PREFIX}-editable`;
   contentEditable.setAttribute('contenteditable', 'true');
+  contentEditable.setAttribute('spellcheck', 'false');
 
   let placeholderRender: PlaceholderRender | null = null;
   if (params.placeholder) {
@@ -45,11 +46,23 @@ export default function render(params = { placeholder: '', content: '' }) {
     });
     container.appendChild(placeholderEle);
   }
-
+  function getValue() {
+    return contentEditable.innerText;
+  }
+  function setValue(value: string) {
+    contentEditable.innerText = value || '';
+    if (!placeholderRender) return;
+    if (value && value.length) {
+      placeholderRender.changeVisible(false);
+    } else {
+      placeholderRender.changeVisible(true);
+    }
+  }
   container.appendChild(contentEditable);
-
   return {
     container,
     contentEditable,
+    setValue,
+    getValue,
   };
 }

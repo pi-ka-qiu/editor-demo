@@ -9,8 +9,7 @@ import '../lib/browser-editor/browser-editor.scss';
 export default {
   name: 'editor',
   mounted() {
-    const editor = new Editor(this.$el, { placeholder: '输入写什么' });
-    console.log(editor);
+    const editor = new Editor(this.$el, { placeholder: '输入些什么' });
   },
   methods: {
   },

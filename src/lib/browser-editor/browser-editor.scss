@@ -28,6 +28,10 @@ $px-minimum:8px;
   font-size: $font-size-base;
   white-space: pre;
   text-align: left;
+  &:focus {
+    border-color: transparent;
+    outline-color: transparent;
+  }
 }
 .c-editor-placeholder{
   color: #000;
