@@ -33,6 +33,6 @@ $px-minimum:8px;
   color: #000;
   font-size: $font-size-base;
   position: absolute;
-  left: 0;
-  top: 0;
+  left: $px-minimum;
+  top: $px-minimum;
 }

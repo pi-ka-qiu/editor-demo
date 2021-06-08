@@ -37,7 +37,7 @@ export default function render(params = { placeholder: '', content: '' }) {
     }
     contentEditable.addEventListener('input', () => {
       if (!placeholderRender) return;
-      if (contentEditable.textContent) {
+      if (contentEditable.innerText) {
         placeholderRender.changeVisible(false);
       } else {
         placeholderRender.changeVisible(true);

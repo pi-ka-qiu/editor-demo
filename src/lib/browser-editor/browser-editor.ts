@@ -6,9 +6,9 @@ import EditorCord from '../editor-core';
 import browserRender from './render/browser-render';
 
 export default class BrowserEditor implements EditorCord {
-  container: Element;
+  container: HTMLElement;
 
-  contentEditable: Element;
+  contentEditable: HTMLElement;
 
   constructor(el: Element, params = { placeholder: '', content: '' }) {
     // 初始化element 节点
@@ -32,7 +32,7 @@ export default class BrowserEditor implements EditorCord {
   }
 
   getValue() {
-    return this.contentEditable.textContent;
+    return this.contentEditable.innerText;
   }
 
   // eslint-disable-next-line class-methods-use-this
