@@ -27,7 +27,7 @@ export default {
     await fs.writeFile(path, content);
   },
   async appendFile(path, data) {
-    this.state.editorContent[path] = this.state.editorContent[path] + data;
+    this.state.editorContent[path] += data;
     await fs.appendFile(path, data);
   },
   async readFile(path, options) {
