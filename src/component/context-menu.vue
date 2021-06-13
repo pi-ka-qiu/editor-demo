@@ -1,17 +1,23 @@
 <template>
-  <div class="context-menu" :style="{
-     left: position.left,
-     top: position.top
-   }">
+  <div
+    class="context-menu"
+    :style="{
+      left: position.left,
+      top: position.top,
+    }"
+  >
     <a-popover trigger="click" title="新建文件">
       <template slot="content">
         <a-input
           placeholder="文件名"
-          @pressEnter="handClick('createFile', $event.target.value)"></a-input>
+          @pressEnter="handClick('createFile', $event.target.value)"
+        ></a-input>
       </template>
       <div class="context-menu-item">新建文件</div>
     </a-popover>
-    <div class="context-menu-item" @click="handClick('createDir')">新建文件夹</div>
+    <div class="context-menu-item" @click="handClick('createDir')">
+      新建文件夹
+    </div>
     <div class="context-menu-item" @click="handClick('reName')">重命名</div>
     <div class="context-menu-item" @click="handClick('copy')">复制</div>
     <div class="context-menu-item" @click="handClick('paste')">粘贴</div>
@@ -38,7 +44,10 @@ export default {
       },
     },
   },
-  components: { APopover: Popover, AInput: Input },
+  components: {
+    APopover: Popover,
+    AInput: Input,
+  },
   data() {
     return {};
   },

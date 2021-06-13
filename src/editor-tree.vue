@@ -1,19 +1,22 @@
 <template>
   <div>
-    <div style="position: relative;">
-      <tree ref="tree"
-            style="text-align: left"
-            :data="treeData"
-            @contextmenu="onContextMenu"
+    <div style="position: relative">
+      <tree
+        ref="tree"
+        style="text-align: left"
+        :data="treeData"
+        @contextmenu="onContextMenu"
+        @select="onTreeSelect"
       ></tree>
       <context-menu
         :position="menuPosition"
         @createFile="createFile"
         @createDir="createDir"
         @hidden="contextMenuShow = false"
-        v-show="contextMenuShow"></context-menu>
+        v-show="contextMenuShow"
+      ></context-menu>
     </div>
-    <editor></editor>
+    <editor ref="editor"></editor>
   </div>
 </template>
 
@@ -26,7 +29,11 @@ import fs from './editor-tree-store';
 fs.initFs('userName');
 export default {
   name: 'editor-tree',
-  components: { ContextMenu, tree, editor },
+  components: {
+    ContextMenu,
+    tree,
+    editor,
+  },
   data() {
     return {
       contextMenuShow: false,
@@ -67,6 +74,31 @@ export default {
       const f = await fs.readdir(`/${this.rootName}`);
       console.log(f);
     },
+    // tree 总的点击事件
+    async onTreeSelect(selectedKeys, {
+      selectedNodes,
+      ...e
+    }) {
+      console.log(selectedKeys, e);
+      if (selectedKeys && selectedKeys.length === 1) {
+        // 如果是文件
+        if (selectedNodes[0].isLeaf) {
+          this.selectFile(selectedKeys[0]);
+          return;
+        }
+        this.selectDir(selectedKeys[0]);
+      }
+    },
+    // 点击某一个文件
+    async selectFile(filePath) {
+      console.log(filePath);
+      const content = await fs.readFile(filePath);
+      console.log(content);
+    },
+    // 点击某一个文件夹
+    async selectDir(filePath) {
+      console.log(filePath);
+    },
   },
   async mounted() {
     this.$nextTick(() => {
@@ -79,25 +111,30 @@ export default {
       }
     });
     const treeData = [];
-    await fs.readdirWithType(`/${this.rootName}`, async ({
-      filePath, fileName, isDir, isFile,
-    }) => {
-      console.log(filePath, isDir, isFile);
-      if (isFile) {
-        const content = await fs.readFile(filePath);
-        console.log(content);
-      }
-      treeData.push({
-        title: fileName,
-        key: filePath,
-        isLeaf: isFile,
-      });
-    });
+    await fs.readdirWithType(
+      `/${this.rootName}`,
+      async ({
+        filePath,
+        fileName,
+        isDir,
+        isFile,
+      }) => {
+        console.log(filePath, isDir, isFile);
+        if (isFile) {
+          const content = await fs.readFile(filePath);
+          console.log(content);
+        }
+        treeData.push({
+          title: fileName,
+          key: filePath,
+          isLeaf: isFile,
+        });
+      },
+    );
     this.treeData[0].children = treeData;
   },
 };
 </script>
 
 <style scoped>
-
 </style>

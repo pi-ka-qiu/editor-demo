@@ -1,5 +1,5 @@
 <template>
-    <div class="editor"></div>
+  <div class="editor"></div>
 </template>
 
 <script>
@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style scoped>
-.editor{
+.editor {
   height: 200px;
 }
 </style>

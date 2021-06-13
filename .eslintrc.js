@@ -13,6 +13,8 @@ module.exports = {
     'max-len': ['error', { code: 200 }],
     'max-lines-per-function': ['error', { max: 50 }],
     'max-depth': ['error', 4],
+    'template-curly-spacing': 'off',
+    'indent': 'off',
   },
   parserOptions: {
     parser: 'babel-eslint',
