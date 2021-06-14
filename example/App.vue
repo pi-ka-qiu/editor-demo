@@ -8,12 +8,12 @@
 import editorTree from '../src/editor-tree.vue';
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
-    editorTree,
+    editorTree
   },
   created() {
-  },
+  }
 };
 </script>
 

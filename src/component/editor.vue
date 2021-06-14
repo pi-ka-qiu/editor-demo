@@ -12,8 +12,7 @@ export default {
     // eslint-disable-next-line no-unused-vars
     const editor = new Editor(this.$el, { placeholder: '输入些什么' });
   },
-  methods: {
-  },
+  methods: {},
 };
 </script>
 

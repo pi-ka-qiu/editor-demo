@@ -11,13 +11,13 @@ export default class BrowserEditor implements EditorCore {
 
   getValue: () => {};
 
+  // eslint-disable-next-line no-unused-vars
   setValue: (value: string) => void;
 
   constructor(el: Element, params = { placeholder: '', content: '' }) {
     // 初始化element 节点
-    const {
-      container, contentEditable, getValue, setValue,
-    } = this.render(params);
+    const { container, contentEditable, getValue, setValue } =
+      this.render(params);
     el.appendChild(container);
 
     this.container = container;
@@ -39,7 +39,7 @@ export default class BrowserEditor implements EditorCore {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  render(params:any) {
+  render(params: any) {
     return browserRender(params);
   }
 

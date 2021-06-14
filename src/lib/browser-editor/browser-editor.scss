@@ -3,9 +3,7 @@ $white-2: #f5f5f5;
 // 字体大小
 $font-size-base: 14px;
 /**px*/
-$px-minimum:8px;
-
-
+$px-minimum: 8px;
 
 .c-editor-wrapper {
   display: block;
@@ -28,12 +26,14 @@ $px-minimum:8px;
   font-size: $font-size-base;
   white-space: pre;
   text-align: left;
+
   &:focus {
     border-color: transparent;
     outline-color: transparent;
   }
 }
-.c-editor-placeholder{
+
+.c-editor-placeholder {
   color: #000;
   font-size: $font-size-base;
   position: absolute;

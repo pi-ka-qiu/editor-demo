@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { FileSystem } from 'browser-file-api';
 
 let fs = null;
@@ -11,14 +10,17 @@ export default {
   },
   initFs(namespace) {
     this.state.namespace = namespace || '';
-    fs = new FileSystem({ treePrefix: `trees-${namespace}`, pathPrefix: `path-${namespace}` });
+    fs = new FileSystem({
+      treePrefix: `trees-${namespace}`,
+      pathPrefix: `path-${namespace}`,
+    });
   },
   // 初始化文件列表、会清除之前的缓存
   initFileList: async (fileList) => {
     this.state.fileList = fileList;
     await fs.rmdir();
     // 文件内容、文件夹 缓存
-    const p = fileList.map(file => fs.writeFile(file.path, file.content));
+    const p = fileList.map((file) => fs.writeFile(file.path, file.content));
     await Promise.all(p);
   },
   // 设置编辑器内容
@@ -60,7 +62,10 @@ export default {
       const isDir = stat.isDirectory();
       const isFile = stat.isFile();
       return cb({
-        filePath, fileName, isDir, isFile,
+        filePath,
+        fileName,
+        isDir,
+        isFile,
       });
     });
   },
