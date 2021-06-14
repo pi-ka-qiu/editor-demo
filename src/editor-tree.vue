@@ -75,10 +75,7 @@ export default {
       console.log(f);
     },
     // tree 总的点击事件
-    async onTreeSelect(selectedKeys, {
-      selectedNodes,
-      ...e
-    }) {
+    async onTreeSelect(selectedKeys, { selectedNodes, ...e }) {
       console.log(selectedKeys, e);
       if (selectedKeys && selectedKeys.length === 1) {
         // 如果是文件
@@ -113,12 +110,7 @@ export default {
     const treeData = [];
     await fs.readdirWithType(
       `/${this.rootName}`,
-      async ({
-        filePath,
-        fileName,
-        isDir,
-        isFile,
-      }) => {
+      async ({ filePath, fileName, isDir, isFile }) => {
         console.log(filePath, isDir, isFile);
         if (isFile) {
           const content = await fs.readFile(filePath);
@@ -136,5 +128,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

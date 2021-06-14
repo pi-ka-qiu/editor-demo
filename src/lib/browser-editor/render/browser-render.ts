@@ -32,7 +32,9 @@ export default function render(params = { placeholder: '', content: '' }) {
   let placeholderRender: PlaceholderRender | null = null;
   if (params.placeholder) {
     placeholderRender = new PlaceholderRender();
-    const placeholderEle = placeholderRender.render({ placeholder: params.placeholder });
+    const placeholderEle = placeholderRender.render({
+      placeholder: params.placeholder,
+    });
     if (params.content) {
       placeholderRender.changeVisible(false);
     }
