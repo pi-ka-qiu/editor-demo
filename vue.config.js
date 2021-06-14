@@ -1,6 +1,3 @@
-const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
-
-
 module.exports = {
   devServer: {
     proxy: {
@@ -13,13 +10,6 @@ module.exports = {
         changeOrigin: true,
       },
     },
-  },
-  chainWebpack: (config) => {
-    // 添加插件
-    config.plugin('monaco').use(MonacoWebpackPlugin, [{
-      languages: ['markdown'],
-      features: ['coreCommands', 'find'],
-    }]);
   },
   pages: {
     index: {
