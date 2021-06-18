@@ -16,23 +16,23 @@
         v-show="contextMenuShow"
       ></context-menu>
     </div>
-    <editor ref="editor"></editor>
+    <editor-manager ref='editor'></editor-manager>
   </div>
 </template>
 
 <script>
 import ContextMenu from '@/component/context-menu.vue';
-import tree from './component/tree.vue';
-import editor from './component/editor.vue';
+import Tree from './component/tree.vue';
+import EditorManager from '@/component/editor-manager.vue';
 import fs from './editor-tree-store';
 
 fs.initFs('userName');
 export default {
   name: 'editor-tree',
   components: {
+    EditorManager,
     ContextMenu,
-    tree,
-    editor,
+    Tree,
   },
   data() {
     return {
@@ -51,6 +51,9 @@ export default {
         },
       ],
       rootName: 'tree',
+      editorInstances: {
+        key: [{}],
+      },
     };
   },
   methods: {
@@ -91,10 +94,26 @@ export default {
       console.log(filePath);
       const content = await fs.readFile(filePath);
       console.log(content);
+      let editor = this.$refs.editor.getEditor(filePath);
+      console.log('editor 0', editor);
+      if (!editor) {
+        editor = this.$refs.editor.createEditor(filePath);
+      }
+      this.$nextTick(() => {
+        console.log('editor', editor);
+      });
+      editor.$on('input', function(content) {
+        console.log(content);
+        fs.writeFile(filePath, content);
+      });
+      if (content) editor.setValue(content);
     },
     // 点击某一个文件夹
     async selectDir(filePath) {
       console.log(filePath);
+    },
+    saveEditorContent(content) {
+      console.log(content);
     },
   },
   async mounted() {
