@@ -1,5 +1,5 @@
 <template>
-  <div class="editor"></div>
+  <div class="c-editor"></div>
 </template>
 
 <script>
@@ -16,6 +16,9 @@ export default {
       this.$emit('input', this.getValue());
     });
   },
+  destroyed() {
+    this.editor = undefined;
+  },
   methods: {
     getValue() {
       return this.editor.getValue();
@@ -28,7 +31,7 @@ export default {
 </script>
 
 <style scoped>
-.editor {
+.c-editor {
   height: 200px;
 }
 </style>

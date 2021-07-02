@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div class="editor-tree">
     <div style="position: relative">
       <tree
+        class="tree"
         ref="tree"
         style="text-align: left"
         :data="treeData"
@@ -16,7 +17,7 @@
         v-show="contextMenuShow"
       ></context-menu>
     </div>
-    <editor-manager ref='editor'></editor-manager>
+    <editor-manager class="editor" ref="editor"></editor-manager>
   </div>
 </template>
 
@@ -58,7 +59,6 @@ export default {
   },
   methods: {
     createFile(fileName) {
-      console.log(fileName);
       fs.writeFile(`/${this.rootName}/${fileName}`, 'test content');
       this.contextMenuShow = false;
     },
@@ -71,15 +71,13 @@ export default {
       this.menuPosition.top = `${event.clientY}px`;
       this.contextMenuPath = data;
       this.contextMenuShow = true;
-      console.log(data, '');
     },
     async loadTreeData() {
+      // eslint-disable-next-line no-unused-vars
       const f = await fs.readdir(`/${this.rootName}`);
-      console.log(f);
     },
     // tree 总的点击事件
-    async onTreeSelect(selectedKeys, { selectedNodes, ...e }) {
-      console.log(selectedKeys, e);
+    async onTreeSelect(selectedKeys, { selectedNodes }) {
       if (selectedKeys && selectedKeys.length === 1) {
         // 如果是文件
         if (selectedNodes[0].isLeaf) {
@@ -91,19 +89,12 @@ export default {
     },
     // 点击某一个文件
     async selectFile(filePath) {
-      console.log(filePath);
       const content = await fs.readFile(filePath);
-      console.log(content);
       let editor = this.$refs.editor.getEditor(filePath);
-      console.log('editor 0', editor);
       if (!editor) {
         editor = this.$refs.editor.createEditor(filePath);
       }
-      this.$nextTick(() => {
-        console.log('editor', editor);
-      });
-      editor.$on('input', function(content) {
-        console.log(content);
+      editor.$on('input', function (content) {
         fs.writeFile(filePath, content);
       });
       if (content) editor.setValue(content);
@@ -129,8 +120,7 @@ export default {
     const treeData = [];
     await fs.readdirWithType(
       `/${this.rootName}`,
-      async ({ filePath, fileName, isDir, isFile }) => {
-        console.log(filePath, isDir, isFile);
+      async ({ filePath, fileName, isFile }) => {
         if (isFile) {
           const content = await fs.readFile(filePath);
           console.log(content);
@@ -147,4 +137,17 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.editor-tree {
+  display: flex;
+  width: 100%;
+}
+
+.tree {
+  width: 200px;
+}
+
+.editor {
+  flex: 1 0 auto;
+}
+</style>
