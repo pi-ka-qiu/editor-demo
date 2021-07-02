@@ -45,7 +45,9 @@ export default {
     addCloseListener(tab) {
       const tabs = this.getTabs();
       const key = tab.componentInstance.$attrs.name || 0;
-      const index = this.group.get(key);
+      const index = tabs.findIndex((item) => {
+        return item.componentInstance.$attrs.name === key;
+      });
       // 本tab 如果activity，上一个tab 设置为activity
       if (tab.componentInstance.activity && tabs.length && tabs[index - 1]) {
         const preTab = tabs[index - 1];
