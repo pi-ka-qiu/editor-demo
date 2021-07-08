@@ -5,12 +5,14 @@
 <script>
 import Editor from '../lib/browser-editor/browser-editor';
 import '../lib/browser-editor/browser-editor.scss';
+import { rowSupport } from '../lib/plugin/arr-support.ts';
 
 export default {
   name: 'editor',
   mounted() {
     // eslint-disable-next-line no-unused-vars
     const editor = new Editor(this.$el, { placeholder: '输入些什么' });
+    editor.use(rowSupport());
     this.editor = editor;
     editor.onInput(() => {
       this.$emit('input', this.getValue());

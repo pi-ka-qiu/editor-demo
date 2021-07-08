@@ -46,20 +46,47 @@ export default function render(params = { placeholder: '', content: '' }) {
         placeholderRender.changeVisible(true);
       }
     });
+    contentEditable.addEventListener('paste', function (e) {
+      e.stopPropagation();
+      e.preventDefault();
+      let text = '';
+      let event = e;
+      if (event.clipboardData && event.clipboardData.getData) {
+        text = event.clipboardData.getData('text/plain');
+      } else {
+        // @ts-ignore
+        if (window.clipboardData && window.clipboardData.getData) {
+          // @ts-ignore
+          text = window.clipboardData.getData('Text');
+        }
+      }
+      if (document.queryCommandSupported('insertText')) {
+        document.execCommand('insertText', false, text);
+      } else {
+        document.execCommand('paste', false, text);
+      }
+    });
     container.appendChild(placeholderEle);
   }
+
   function getValue() {
     return contentEditable.innerText;
   }
-  function setValue(value: string) {
-    contentEditable.innerText = value || '';
+
+  function setValue(value: string | Function) {
+    if (typeof value === 'string') {
+      contentEditable.innerText = value || '';
+    } else if (typeof value === 'function') {
+      value();
+    }
     if (!placeholderRender) return;
-    if (value && value.length) {
+    if (contentEditable.innerText && contentEditable.innerText.length) {
       placeholderRender.changeVisible(false);
     } else {
       placeholderRender.changeVisible(true);
     }
   }
+
   container.appendChild(contentEditable);
   return {
     container,

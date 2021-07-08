@@ -6,9 +6,8 @@ import browserRender from './render/browser-render';
 
 export default class BrowserEditor implements EditorCore {
   container: HTMLElement;
-
   contentEditable: HTMLElement;
-
+  state: Object;
   getValue: () => {};
 
   // eslint-disable-next-line no-unused-vars
@@ -20,6 +19,7 @@ export default class BrowserEditor implements EditorCore {
       this.render(params);
     el.appendChild(container);
 
+    this.state = {};
     this.container = container;
     this.contentEditable = contentEditable;
     this.getValue = getValue;
@@ -44,6 +44,6 @@ export default class BrowserEditor implements EditorCore {
   }
 
   use(plugin: any) {
-    return plugin.install(this);
+    return plugin(this);
   }
 }
