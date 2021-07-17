@@ -7,6 +7,7 @@ import browserRender from './render/browser-render';
 export default class BrowserEditor implements EditorCore {
   container: HTMLElement;
   contentEditable: HTMLElement;
+  root: Element;
   state: Object;
   getValue: () => {};
 
@@ -18,10 +19,11 @@ export default class BrowserEditor implements EditorCore {
     const { container, contentEditable, getValue, setValue } =
       this.render(params);
     el.appendChild(container);
-
+    el.classList.add('c-editor');
     this.state = {};
     this.container = container;
     this.contentEditable = contentEditable;
+    this.root = el;
     this.getValue = getValue;
     this.setValue = setValue;
   }

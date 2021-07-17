@@ -1,0 +1,16 @@
+// 字体大小
+$font-size-base: 14px;
+$line-height: 19px;
+.c-editor {
+  .c-editor-row-number{
+    display: inline-block;
+    width: 2em;
+    vertical-align: top;
+    line-height: normal;
+    font-size: $font-size-base;
+    padding: 8px 0;
+  }
+  .c-editor-editable > div {
+    min-height: $line-height;
+  }
+}

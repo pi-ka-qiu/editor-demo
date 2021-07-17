@@ -1,4 +1,4 @@
-export function rowSupport() {
+export default function rowSupport() {
   return (editor: any) => {
     console.log(editor);
     if (!editor.state.arrStructure) editor.state.arrStructure = {};
@@ -6,14 +6,17 @@ export function rowSupport() {
     // function setXMLValue(content) {}
     editor.setValue = (function (base) {
       return function (value: string) {
-        console.log('继承');
         const content = (editor.state.arrStructure.value = value || '');
         base.call(editor, () => {
           const arr = content.split('\n');
           const f = document.createDocumentFragment();
-          arr.forEach((item) => {
+          arr.forEach((item, index) => {
             const span = document.createElement('div');
-            span.innerText = item;
+            if ((!item || !item.length) && index !== arr.length - 1) {
+              span.innerText = '';
+            } else {
+              span.innerText = item;
+            }
             f.appendChild(span);
           });
           // 删除所有子节点
@@ -51,5 +54,6 @@ export function rowSupport() {
         editor.contentEditable.children[rowNumber - 1].remove();
       }
     };
+    return editor;
   };
 }

@@ -70,7 +70,31 @@ export default function render(params = { placeholder: '', content: '' }) {
   }
 
   function getValue() {
-    return contentEditable.innerText;
+    let str = '';
+    for (let i = 0; i < contentEditable.childNodes.length; i++) {
+      const item = contentEditable.childNodes[i];
+      const type = item.nodeType;
+      console.log(str);
+      if (type === Node.ELEMENT_NODE) {
+        const nextItem = contentEditable.childNodes[i + 1];
+        if (item.nodeName === 'BR' && !nextItem) continue;
+        if (item.nodeName === 'BR' && nextItem) {
+          str += '\n';
+        } else if (item.nodeName !== 'BR') {
+          if (str.endsWith('\n')) {
+            str += nextItem ? item.textContent + '\n' : item.textContent;
+          } else {
+            str +=
+              i === 0
+                ? item.textContent + '\n'
+                : '\n' + item.textContent + '\n';
+          }
+        }
+      } else {
+        str += item.textContent;
+      }
+    }
+    return str;
   }
 
   function setValue(value: string | Function) {
