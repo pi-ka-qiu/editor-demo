@@ -99,7 +99,23 @@ export default function render(params = { placeholder: '', content: '' }) {
 
   function setValue(value: string | Function) {
     if (typeof value === 'string') {
-      contentEditable.innerText = value || '';
+      const content = value || '';
+      const arr = content.split('\n');
+      const f = document.createDocumentFragment();
+      arr.forEach((item, index) => {
+        const span = document.createElement('div');
+        if ((!item || !item.length) && index !== arr.length - 1) {
+          span.innerText = '';
+        } else {
+          span.innerText = item;
+        }
+        f.appendChild(span);
+      });
+      // 删除所有子节点
+      while (contentEditable.firstChild) {
+        contentEditable.removeChild(contentEditable.firstChild);
+      }
+      contentEditable.appendChild(f);
     } else if (typeof value === 'function') {
       value();
     }

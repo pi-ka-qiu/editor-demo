@@ -3,32 +3,6 @@ export default function rowSupport() {
     console.log(editor);
     if (!editor.state.arrStructure) editor.state.arrStructure = {};
 
-    // function setXMLValue(content) {}
-    editor.setValue = (function (base) {
-      return function (value: string) {
-        const content = (editor.state.arrStructure.value = value || '');
-        base.call(editor, () => {
-          const arr = content.split('\n');
-          const f = document.createDocumentFragment();
-          arr.forEach((item, index) => {
-            const span = document.createElement('div');
-            if ((!item || !item.length) && index !== arr.length - 1) {
-              span.innerText = '';
-            } else {
-              span.innerText = item;
-            }
-            f.appendChild(span);
-          });
-          // 删除所有子节点
-          while (editor.contentEditable.firstChild) {
-            editor.contentEditable.removeChild(
-              editor.contentEditable.firstChild,
-            );
-          }
-          editor.contentEditable.appendChild(f);
-        });
-      };
-    })(editor.setValue);
     editor.insertRow = function (
       value: string,
       append: boolean | number = true,
