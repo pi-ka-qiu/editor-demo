@@ -1,18 +1,7 @@
-const MarkdownIt = require('markdown-it');
-const hljs = require('highlight.js');
+import remark from 'remark';
+import html from 'remark-html';
+import gfm from 'remark-gfm';
 
-const md = new MarkdownIt({
-  html: true,
-  linkify: true,
-  typographer: true,
-  highlight(str, lang) {
-    if (lang && hljs.getLanguage(lang)) {
-      return hljs.highlight(lang, str).value;
-    }
-
-    return ''; // use external default escaping
-  },
-});
-md.use(require('markdown-it-emoji'));
+const md = remark().use(gfm).use(html);
 
 export default md;

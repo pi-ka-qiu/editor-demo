@@ -40,6 +40,10 @@ export default class BrowserEditor implements EditorCore {
     this.contentEditable.addEventListener('input', func);
   }
 
+  onScroll(func: (event: any) => void) {
+    this.container.addEventListener('scroll', func);
+  }
+
   // eslint-disable-next-line class-methods-use-this
   render(params: any) {
     return browserRender(params);

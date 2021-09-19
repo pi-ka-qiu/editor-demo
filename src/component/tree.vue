@@ -27,9 +27,13 @@ export default {
           childEleVN.push(
             <Tree.TreeNode
               key={item.key}
-              {...{ attrs: item }}
-              vOn:contextmenu_native={(event) => {
-                this.onContextMenu(event, item);
+              {...{
+                attrs: item,
+                nativeOn: {
+                  contextmenu: (event) => {
+                    this.onContextMenu(event, item);
+                  },
+                },
               }}
             >
               {childEleVN2}
@@ -39,9 +43,13 @@ export default {
           childEleVN.push(
             <Tree.TreeNode
               key={item.key}
-              {...{ attrs: item }}
-              vOn:contextmenu_native={(event) => {
-                this.onContextMenu(event, item);
+              {...{
+                attrs: item,
+                nativeOn: {
+                  contextmenu: (event) => {
+                    this.onContextMenu(event, item);
+                  },
+                },
               }}
             />,
           );
@@ -52,8 +60,12 @@ export default {
     const childEle = r(this.data);
     return (
       <Tree.DirectoryTree
-        vOn:select={this.$listeners.select}
-        {...{ attrs: this.$attrs }}
+        {...{
+          attrs: this.$attrs,
+          on: {
+            select: this.$listeners.select,
+          },
+        }}
       >
         {childEle}
       </Tree.DirectoryTree>

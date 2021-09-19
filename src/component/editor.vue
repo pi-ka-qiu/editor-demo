@@ -19,6 +19,9 @@ export default {
     editor.onInput(() => {
       this.$emit('input', this.getValue());
     });
+    editor.onBlur(() => {
+      this.$emit('blur', this.getValue());
+    });
     window.t = this.editor;
   },
   destroyed() {
@@ -38,5 +41,6 @@ export default {
 <style scoped>
 .c-editor {
   height: 200px;
+  max-width: 400px;
 }
 </style>

@@ -18,6 +18,7 @@
       ></context-menu>
     </div>
     <editor-manager class="editor" ref="editor"></editor-manager>
+    <div class="c-md" ref="mdView"></div>
   </div>
 </template>
 
@@ -25,6 +26,7 @@
 import ContextMenu from '@/component/context-menu.vue';
 import Tree from './component/tree.vue';
 import EditorManager from '@/component/editor-manager.vue';
+import md from './mdRender.js';
 import fs from './editor-tree-store';
 
 fs.initFs('userName');
@@ -95,9 +97,20 @@ export default {
         editor = this.$refs.editor.createEditor(filePath);
       }
       editor.$on('input', function (content) {
+        console.log('存储文件', content);
         fs.writeFile(filePath, content);
       });
-      if (content) editor.setValue(content);
+      editor.$on('blur', function (content) {
+        fs.writeFile(filePath, content);
+      });
+      if (content) {
+        editor.setValue(content);
+        md.process(content).then((file) => {
+          if (file && this.$refs.mdView) {
+            this.$refs.mdView.innerHTML = file;
+          }
+        });
+      }
     },
     // 点击某一个文件夹
     async selectDir(filePath) {

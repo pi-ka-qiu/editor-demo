@@ -32,7 +32,26 @@ export default function rowSupportRender() {
     // 以上述配置开始观察目标节点
     observer.observe(targetNode, config);
     renderRows(root, editor.contentEditable.children.length);
-
+    editor.onScroll(function (event: any) {
+      console.log('scroll', event.target.scrollTop, root);
+      // root.scrollTop = event.target.scrollTop;
+      // root.style.transform = `translateY(-${event.target.scrollTop}px)`;
+      root.style.top = `-${event.target.scrollTop}px`;
+    });
+    // @ts-ignore
+    window.tt = root;
+    root.addEventListener('scroll', function (event) {
+      // 禁止滚动条
+      // event.preventDefault();
+      // event.stopPropagation();
+      console.log('scroll222222222', event);
+      return;
+    });
+    root.addEventListener('wheel', function (event) {
+      console.log('wheel222222222', event, editor.container.scrollTop);
+      editor.container.scrollTop = editor.container.scrollTop + event.deltaY;
+      return;
+    });
     return editor;
   };
 }

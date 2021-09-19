@@ -46,28 +46,29 @@ export default function render(params = { placeholder: '', content: '' }) {
         placeholderRender.changeVisible(true);
       }
     });
-    contentEditable.addEventListener('paste', function (e) {
-      e.stopPropagation();
-      e.preventDefault();
-      let text = '';
-      let event = e;
-      if (event.clipboardData && event.clipboardData.getData) {
-        text = event.clipboardData.getData('text/plain');
-      } else {
-        // @ts-ignore
-        if (window.clipboardData && window.clipboardData.getData) {
-          // @ts-ignore
-          text = window.clipboardData.getData('Text');
-        }
-      }
-      if (document.queryCommandSupported('insertText')) {
-        document.execCommand('insertText', false, text);
-      } else {
-        document.execCommand('paste', false, text);
-      }
-    });
     container.appendChild(placeholderEle);
   }
+  contentEditable.addEventListener('paste', function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+    let text = '';
+    let event = e;
+    if (event.clipboardData && event.clipboardData.getData) {
+      text = event.clipboardData.getData('text/plain');
+    } else {
+      // @ts-ignore
+      if (window.clipboardData && window.clipboardData.getData) {
+        // @ts-ignore
+        text = window.clipboardData.getData('Text');
+      }
+    }
+    setValue(text);
+    // if (document.queryCommandSupported('insertText')) {
+    //   document.execCommand('insertText', false, text);
+    // } else {
+    //   document.execCommand('paste', false, text);
+    // }
+  });
 
   function getValue() {
     let str = '';
@@ -103,13 +104,13 @@ export default function render(params = { placeholder: '', content: '' }) {
       const arr = content.split('\n');
       const f = document.createDocumentFragment();
       arr.forEach((item, index) => {
-        const span = document.createElement('div');
+        const div = document.createElement('div');
         if ((!item || !item.length) && index !== arr.length - 1) {
-          span.innerText = '';
+          div.appendChild(document.createElement('br'));
         } else {
-          span.innerText = item;
+          div.innerText = item;
         }
-        f.appendChild(span);
+        f.appendChild(div);
       });
       // 删除所有子节点
       while (contentEditable.firstChild) {

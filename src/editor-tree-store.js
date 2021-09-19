@@ -1,3 +1,4 @@
+// eslint-disable
 import { FileSystem } from 'browser-file-api';
 
 let fs = null;
