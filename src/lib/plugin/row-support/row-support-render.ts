@@ -1,8 +1,13 @@
 import './row-support.scss';
+
 export default function rowSupportRender() {
   return (editor: any) => {
     const root = document.createElement('div');
     root.className += `c-editor-row-number`;
+    const lineHeight = editor.state.initParams.lineHeight;
+    const fontSize = editor.state.initParams.fontSize;
+    if (lineHeight) root.style.lineHeight = lineHeight;
+    if (fontSize) root.style.fontSize = fontSize;
     const cEditor = editor.root;
     cEditor.appendChild(root);
     cEditor.insertBefore(root, editor.container);
@@ -21,7 +26,13 @@ export default function rowSupportRender() {
         console.log(mutation);
         if (mutation.type === 'childList') {
           console.log('A child node has been added or removed.');
-          renderRows(root, editor.contentEditable.children.length);
+          const count = Math.floor(root.clientHeight / lineHeight.slice(0, -2));
+          renderRows(
+            root,
+            count > editor.contentEditable.children.length
+              ? count
+              : editor.contentEditable.children.length,
+          );
         }
       }
     };
@@ -31,7 +42,17 @@ export default function rowSupportRender() {
 
     // 以上述配置开始观察目标节点
     observer.observe(targetNode, config);
-    renderRows(root, editor.contentEditable.children.length);
+    // 计算需要渲染的行数
+    window.setTimeout(() => {
+      console.log(root.clientHeight, 'cccccc2');
+      const count = Math.floor(root.clientHeight / lineHeight.slice(0, -2));
+      renderRows(
+        root,
+        count > editor.contentEditable.children.length
+          ? count
+          : editor.contentEditable.children.length,
+      );
+    }, 0);
     editor.onScroll(function (event: any) {
       console.log('scroll', event.target.scrollTop, root);
       // root.scrollTop = event.target.scrollTop;
@@ -40,13 +61,6 @@ export default function rowSupportRender() {
     });
     // @ts-ignore
     window.tt = root;
-    root.addEventListener('scroll', function (event) {
-      // 禁止滚动条
-      // event.preventDefault();
-      // event.stopPropagation();
-      console.log('scroll222222222', event);
-      return;
-    });
     root.addEventListener('wheel', function (event) {
       console.log('wheel222222222', event, editor.container.scrollTop);
       editor.container.scrollTop = editor.container.scrollTop + event.deltaY;
@@ -56,16 +70,17 @@ export default function rowSupportRender() {
   };
 }
 
-function createRow(number: number) {
+function createRow(keyNumber: number) {
   const row = document.createElement('div');
-  row.innerText = number + '';
-  row.setAttribute('row-key', number + '');
+  row.innerText = keyNumber + '';
+  row.setAttribute('row-key', keyNumber + '');
   return row;
 }
-function createRows(start: number, count: number) {
+
+function createRows(startKey: number, count: number) {
   const f = document.createDocumentFragment();
   for (let i = 1; i <= count; i++) {
-    f.appendChild(createRow(start + i));
+    f.appendChild(createRow(startKey + i));
   }
   return f;
 }
@@ -81,6 +96,10 @@ function renderRows(root: Element, total: number) {
     !root.lastElementChild ||
     !root.lastElementChild.getAttribute('row-key')
   ) {
+    // 删除所有子节点
+    while (root.firstChild) {
+      root.removeChild(root.firstChild);
+    }
     const f = createRows(0, total);
     root.appendChild(f);
     return;

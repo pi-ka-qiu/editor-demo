@@ -7,15 +7,14 @@ $line-height: 19px;
     display: inline-block;
     width: 28px;
     vertical-align: top;
-    line-height: $line-height;
     font-size: $font-size-base;
     padding: 8px 0;
     height: 100%;
     scrollbar-width: none;
+    user-select: none;
   }
   .c-editor-editable > div {
     min-height: $line-height;
-    line-height: $line-height;
   }
   .c-editor-wrapper {
     width: calc(100% - 28px);

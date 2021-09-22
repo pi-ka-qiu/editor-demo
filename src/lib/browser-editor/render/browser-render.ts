@@ -21,21 +21,30 @@ class PlaceholderRender {
   }
 }
 
-export default function render(params = { placeholder: '', content: '' }) {
+export default function render({
+  placeholder = '',
+  content = '',
+  fontSize = '14px',
+  lineHeight = '20px',
+  // eslint-disable-next-line no-unused-vars
+  ...params
+}) {
   const container = document.createElement('div');
   container.className += `${PREFIX}-wrapper`;
   const contentEditable = document.createElement('div');
   contentEditable.className += `${PREFIX}-editable`;
   contentEditable.setAttribute('contenteditable', 'true');
   contentEditable.setAttribute('spellcheck', 'false');
+  if (fontSize) contentEditable.style.fontSize = fontSize;
+  if (lineHeight) contentEditable.style.lineHeight = lineHeight;
 
   let placeholderRender: PlaceholderRender | null = null;
-  if (params.placeholder) {
+  if (placeholder) {
     placeholderRender = new PlaceholderRender();
     const placeholderEle = placeholderRender.render({
-      placeholder: params.placeholder,
+      placeholder: placeholder,
     });
-    if (params.content) {
+    if (content) {
       placeholderRender.changeVisible(false);
     }
     contentEditable.addEventListener('input', () => {

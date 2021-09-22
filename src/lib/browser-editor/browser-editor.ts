@@ -14,13 +14,31 @@ export default class BrowserEditor implements EditorCore {
   // eslint-disable-next-line no-unused-vars
   setValue: (value: string) => void;
 
-  constructor(el: Element, params = { placeholder: '', content: '' }) {
+  constructor(
+    el: Element,
+    {
+      placeholder = '',
+      content = '',
+      fontSize = '14px',
+      lineHeight = '20px',
+      ...params
+    },
+  ) {
+    const initParams = {
+      placeholder,
+      content,
+      fontSize,
+      lineHeight,
+      ...params,
+    };
     // 初始化element 节点
     const { container, contentEditable, getValue, setValue } =
-      this.render(params);
+      this.render(initParams);
     el.appendChild(container);
     el.classList.add('c-editor');
-    this.state = {};
+    this.state = {
+      initParams: initParams,
+    };
     this.container = container;
     this.contentEditable = contentEditable;
     this.root = el;

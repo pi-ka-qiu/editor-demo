@@ -3,6 +3,11 @@ export default function rowSupport() {
     console.log(editor);
     if (!editor.state.arrStructure) editor.state.arrStructure = {};
 
+    /**
+     * 在某一行之后插入内容
+     * @param value 内容
+     * @param append 布尔值表示追加到最后，数字则表示行数
+     */
     editor.insertRow = function (
       value: string,
       append: boolean | number = true,
@@ -23,6 +28,10 @@ export default function rowSupport() {
         }
       }
     };
+    /**
+     * 删除某一行内容
+     * @param rowNumber
+     */
     editor.deleteRow = function (rowNumber: number) {
       if (editor.contentEditable.children[rowNumber - 1]) {
         editor.contentEditable.children[rowNumber - 1].remove();
