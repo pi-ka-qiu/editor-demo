@@ -1,0 +1,67 @@
+// 图标大小
+$icon-big: 48px;
+$icon-base: 32px;
+$icon-small: 24px;
+$icon-minimum: 20px;
+
+// 字体大小
+$font-size-big: 16px;
+$line-height-big: 24px;
+
+$font-size-base: 14px;
+$line-height-base: 22px;
+
+$font-size-small: 12px;
+$line-height-small: 20px;
+
+$font-size-minimum: 10px;
+$line-height-minimum: 18px;
+
+/**px*/
+$px-small: 10px;
+// 主题色
+$primary-color: #1890ff;
+$secondary-color: #80C3FF;
+// 文本颜色
+$color-title: rgba(0, 0, 0, 0.85);
+$color-bg: #f3f3f3;
+$color-hover: rgba(0, 0, 0, 0.15);
+//分割线
+$color-dividers: rgba(0, 0, 0, 0.09);
+/* Box-shadow -------------------------- */
+$box-shadow-light: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+.c-editor-tool-bar {
+  vertical-align: top;
+  width: 100%;
+  user-select: none;
+  display: flex;
+  align-items: stretch;
+  background-color: $color-bg;
+  // border: 1px solid #eee;
+  color: $color-title;
+  box-sizing: content-box;
+  box-shadow: $box-shadow-light;
+  padding: 0 2px;
+  overflow: visible;
+
+  .c-editor-icon {
+    flex: 1 0;
+    display: inline-block;
+    width: 46px;
+    height: 46px;
+    padding: $px-small;
+    box-sizing: border-box;
+    text-align: center;
+    line-height: 26px;
+
+    &:hover {
+      background-color: $color-hover;
+      cursor: pointer;
+    }
+
+    &--active {
+      border-bottom: 3px solid $secondary-color;
+    }
+  }
+}
+

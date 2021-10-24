@@ -1,28 +1,27 @@
 // 字体大小
 $font-size-base: 14px;
 $line-height: 19px;
-.c-editor {
-  .c-editor-row-number {
-    position: absolute;
-    display: inline-block;
-    width: 28px;
-    vertical-align: top;
-    font-size: $font-size-base;
-    padding: 8px 0;
-    height: 100%;
-    scrollbar-width: none;
-    user-select: none;
-  }
-  .c-editor-editable > div {
-    min-height: $line-height;
-  }
-  .c-editor-wrapper {
-    width: calc(100% - 28px);
-    margin-left: 28px;
-    height: 100%;
-    overflow: auto;
-  }
+.c-editor-row-number-wrap{
+  position: relative;
+  width: 28px;
+  overflow: hidden;
 }
+.c-editor-row-number {
+  position: absolute;
+  display: inline-block;
+  width: 28px;
+  vertical-align: top;
+  font-size: $font-size-base;
+  margin: 8px 0;
+  height: 100%;
+  scrollbar-width: none;
+  user-select: none;
+}
+
+.c-editor-editable > div {
+  min-height: $line-height;
+}
+
 .c-editor-row-number::-webkit-scrollbar {
   display: none;
 }

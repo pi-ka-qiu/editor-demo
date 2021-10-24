@@ -1,6 +1,7 @@
 import './row-support.scss';
 
-export default function rowSupportRender() {
+// eslint-disable-next-line no-unused-vars
+export default function rowSupportRender({ el }: { el: Element }) {
   return (editor: any) => {
     const root = document.createElement('div');
     root.className += `c-editor-row-number`;
@@ -8,9 +9,8 @@ export default function rowSupportRender() {
     const fontSize = editor.state.initParams.fontSize;
     if (lineHeight) root.style.lineHeight = lineHeight;
     if (fontSize) root.style.fontSize = fontSize;
-    const cEditor = editor.root;
-    cEditor.appendChild(root);
-    cEditor.insertBefore(root, editor.container);
+    el.classList.add('c-editor-row-number-wrap');
+    el.appendChild(root);
 
     console.log('watch', editor.contentEditable);
     // 选择需要观察变动的节点
